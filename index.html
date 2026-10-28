@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediChain | Smart Hospital Supply Chain & Logistics</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        medical: {
+                            50: '#f0fdf4',
+                            500: '#10b981',
+                            600: '#059669',
+                            950: '#022c22'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for professional icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Cairo for Arabic & Inter for English -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', 'Inter', sans-serif;
+        }
+        .code-font {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        /* Custom smooth scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(52, 211, 153, 0.3);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(52, 211, 153, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col transition-colors duration-300 selection:bg-teal-500 selection:text-white">
+
+    <!-- Top Developer Status Bar -->
+    <header class="bg-slate-900/90 border-b border-slate-800 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-4">
+            <!-- Brand & System Status -->
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-teal-900/40">
+                    <i class="fa-solid fa-cubes text-white text-sm"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-black text-lg tracking-wider bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">MEDICHAIN</span>
+                        <span class="bg-teal-500/10 text-teal-400 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-teal-500/20" data-i18n="sys_active">v2.4 Production</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 hidden sm:block" data-i18n="sys_subtitle">منظومة سلاسل التوريد والخدمات اللوجستية للمستشفيات</p>
+                </div>
+            </div>
+
+            <!-- System Live Ticker (Dev Touch) -->
+            <div class="hidden lg:flex items-center gap-4 bg-slate-950/60 px-3 py-1 rounded-lg border border-slate-800/80 text-xs code-font text-slate-400">
+                <span class="flex items-center gap-1.5 text-emerald-400">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    NODE: CAIRO-DC01
+                </span>
+                <span class="text-slate-600">|</span>
+                <span>LATENCY: <strong class="text-slate-200">18ms</strong></span>
+                <span class="text-slate-600">|</span>
+                <span>SYNC: <strong class="text-slate-200">OK</strong></span>
+            </div>
+
+            <!-- Controls: Lang & Theme Toggles -->
+            <div class="flex items-center gap-2.5">
+                <!-- Language Switcher -->
+                <button onclick="toggleLanguage()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 border border-slate-700/60 transition-all flex items-center gap-1.5">
+                    <i class="fa-solid fa-globe text-teal-400"></i>
+                    <span id="lang-label">English</span>
+                </button>
+
+                <!-- Theme Switcher -->
+                <button onclick="toggleTheme()" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/60 transition-all flex items-center justify-center">
+                    <i id="theme-icon" class="fa-solid fa-sun text-amber-400"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 space-y-6">
+
+        <!-- Banner / Hero Section with Real Medical Image -->
+        <section class="relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-900/60 shadow-2xl">
+            <div class="absolute inset-0 z-0 opacity-20 mix-blend-overlay">
+                <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=1600&auto=format&fit=crop" alt="Medical Supply Chain" class="w-full h-full object-cover">
+            </div>
+            <div class="relative z-10 p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div class="space-y-2 max-w-2xl">
+                    <span class="text-xs font-bold uppercase tracking-wider text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full border border-teal-500/20" data-i18n="badge_secure">نظومة آمنة لإدارة المستودعات</span>
+                    <h1 class="text-2xl md:text-3xl font-black text-white tracking-tight" data-i18n="hero_title">إدارة المخزون الطبي واللوجستيات الطارئة</h1>
+                    <p class="text-slate-400 text-sm leading-relaxed" data-i18n="hero_desc">مراقبة فورية لمستويات الأدوية الحرجة، تنبؤ بمخزون الأمان (Safety Stock)، وإدارة الإمدادات العاجلة للفروع بأعلى كفاءة تشغيلية.</p>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <button onclick="document.getElementById('inventory-section').scrollIntoView({behavior: 'smooth'})" class="px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold shadow-lg shadow-teal-900/30 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <span data-i18n="btn_view_inventory">استعراض المخزون</span>
+                    </button>
+                    <button onclick="document.getElementById('logistics-section').scrollIntoView({behavior: 'smooth'})" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-truck-fast text-cyan-400"></i>
+                        <span data-i18n="btn_dispatch_room">غرفة الطوارئ واللوجستيات</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1. Executive Dashboard Cards -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Card 1 -->
+            <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-5 shadow-lg backdrop-blur-sm relative overflow-hidden group hover:border-teal-500/40 transition-all">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-teal-500/5 rounded-full blur-2xl group-hover:bg-teal-500/15 transition-all"></div>
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <p class="text-xs font-medium text-slate-400" data-i18n="card1_title">إجمالي أصناف المخزون</p>
+                        <h3 class="text-2xl font-black text-white mt-1">1,428</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center border border-teal-500/20">
+                        <i class="fa-solid fa-pills text-base"></i>
+                    </div>
+                </div>
+                <div class="flex items-center gap-1.5 text-xs text-emerald-400 font-medium">
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <span data-i18n="card1_sub">+12 صنف جديد هذا الأسبوع</span>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-5 shadow-lg backdrop-blur-sm relative overflow-hidden group hover:border-amber-500/40 transition-all">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/15 transition-all"></div>
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <p class="text-xs font-medium text-slate-400" data-i18n="card2_title">تنبيهات مخزون الأمان</p>
+                        <h3 class="text-2xl font-black text-amber-400 mt-1">24</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center border border-amber-500/20">
+                        <i class="fa-solid fa-triangle-exclamation text-base"></i>
+                    </div>
+                </div>
+                <div class="flex items-center gap-1.5 text-xs text-amber-400/90 font-medium">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span data-i18n="card2_sub">تحت الحد الأدنى الآمن</span>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-5 shadow-lg backdrop-blur-sm relative overflow-hidden group hover:border-rose-500/40 transition-all">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-rose-500/5 rounded-full blur-2xl group-hover:bg-rose-500/15 transition-all"></div>
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <p class="text-xs font-medium text-slate-400" data-i18n="card3_title">أصناف حرجة / منتهية</p>
+                        <h3 class="text-2xl font-black text-rose-400 mt-1">7</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center border border-rose-500/20">
+                        <i class="fa-solid fa-ban text-base"></i>
+                    </div>
+                </div>
+                <div class="flex items-center gap-1.5 text-xs text-rose-400 font-medium">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span data-i18n="card3_sub">تتطلب طلبية طوارئ عاجلة</span>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-5 shadow-lg backdrop-blur-sm relative overflow-hidden group hover:border-cyan-500/40 transition-all">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/15 transition-all"></div>
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <p class="text-xs font-medium text-slate-400" data-i18n="card4_title">متوسط وقت التوريد (Lead Time)</p>
+                        <h3 class="text-2xl font-black text-cyan-400 mt-1">4.2 <span class="text-xs text-slate-400 font-normal" data-i18n="days_unit">يوم</span></h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center border border-cyan-500/20">
+                        <i class="fa-solid fa-clock text-base"></i>
+                    </div>
+                </div>
+                <div class="flex items-center gap-1.5 text-xs text-cyan-400 font-medium">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span data-i18n="card4_sub">أسرع بنسبة 8% عن الشهر السابق</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Smart Inventory & Safety Stock Table Section -->
+        <section id="inventory-section" class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 md:p-6 shadow-xl backdrop-blur-sm space-y-5">
+            <!-- Section Header & Toolbar -->
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                <div>
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-table-list text-teal-400"></i>
+                        <span data-i18n="table_main_title">جدول المخزون الحي ومستويات الأمان</span>
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-0.5" data-i18n="table_main_desc">البحث الفوري وتصفية الأدوية حسب حالة المخزون وتاريخ الصلاحية.</p>
+                </div>
+
+                <!-- Professional Action Toolbar -->
+                <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto">
+                    <!-- Live Search Input -->
+                    <div class="relative flex-1 sm:w-64">
+                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                        </span>
+                        <input type="text" id="searchInput" oninput="filterTable()" placeholder="ابحث باسم الدواء..." class="w-full bg-slate-950/70 border border-slate-700/80 rounded-xl pr-9 pl-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-teal-500 transition-all">
+                    </div>
+
+                    <!-- Filter Dropdown -->
+                    <select id="statusFilter" onchange="filterTable()" class="bg-slate-950/70 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-teal-500 transition-all">
+                        <option value="all" data-i18n="filter_all">جميع الحالات</option>
+                        <option value="safe" data-i18n="filter_safe">آمن (Safe)</option>
+                        <option value="warning" data-i18n="filter_warning">مخزون أمان (Low)</option>
+                        <option value="critical" data-i18n="filter_critical">حرج / منتهي (Critical)</option>
+                    </select>
+
+                    <!-- Export CSV Button -->
+                    <button onclick="exportCSV()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition-all flex items-center gap-1.5" title="تصدير كملف CSV">
+                        <i class="fa-solid fa-file-arrow-down text-teal-400"></i>
+                        <span class="hidden sm:inline" data-i18n="btn_export">تصدير</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Responsive Table -->
+            <div class="overflow-x-auto rounded-xl border border-slate-800/80">
+                <table class="w-full text-right text-xs">
+                    <thead class="bg-slate-950/80 text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-800">
+                        <tr>
+                            <th class="p-3.5" data-i18n="th_drug">اسم الدواء / المادة الفعالة</th>
+                            <th class="p-3.5" data-i18n="th_qty">الكمية الحالية</th>
+                            <th class="p-3.5" data-i18n="th_safety">حد الأمان (Safety Stock)</th>
+                            <th class="p-3.5" data-i18n="th_expiry">تاريخ الصلاحية</th>
+                            <th class="p-3.5" data-i18n="th_status">الحالة التشغيلية</th>
+                            <th class="p-3.5 text-center" data-i18n="th_action">إجراءات سريعة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryTableBody" class="divide-y divide-slate-800/60 bg-slate-900/40">
+                        <!-- Populated via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. Emergency Dispatch & Logistics Simulator Section -->
+        <section id="logistics-section" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left: Dispatch Form -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 md:p-6 shadow-xl backdrop-blur-sm space-y-4 lg:col-span-1 flex flex-col justify-between">
+                <div>
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-truck-medical text-cyan-400"></i>
+                        <span data-i18n="dispatch_title">غرفة الطوارئ واللوجستيات</span>
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-0.5" data-i18n="dispatch_desc">اختر الدواء والفرع المطلوب لإطلاق شحنة طوارئ فورية.</p>
+
+                    <form id="dispatchForm" onsubmit="triggerDispatch(event)" class="space-y-4 mt-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1.5" data-i18n="label_drug">اختر الدواء المطلوب:</label>
+                            <select id="dispatchDrug" class="w-full bg-slate-950/70 border border-slate-700/80 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-cyan-500 transition-all">
+                                <option value="Paracetamol 500mg IV">Paracetamol 500mg IV (مخزون منخفض)</option>
+                                <option value="Insulin Regular 100IU">Insulin Regular 100IU (حرج)</option>
+                                <option value="Adrenaline 1mg/ml">Adrenaline 1mg/ml (طوارئ قصوى)</option>
+                                <option value="Morphine Sulfate 10mg">Morphine Sulfate 10mg (مقيد)</option>
+                                <option value="Saline 0.9% 500ml">Saline 0.9% 500ml (محلول وريدي)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1.5" data-i18n="label_branch">فرع المستشفى المستهدف:</label>
+                            <select id="dispatchBranch" class="w-full bg-slate-950/70 border border-slate-700/80 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-cyan-500 transition-all">
+                                <option value="مستشفى دمياط العام - طوارئ">مستشفى دمياط العام - طوارئ (الفرع الرئيسي)</option>
+                                <option value="مركز القلب والجهاز الهضمي">مركز القلب والجهاز الهضمي</option>
+                                <option value="مستشفى الأطفال التخصصي">مستشفى الأطفال التخصصي</option>
+                                <option value="مستشفى العزل الطبي برأس البر">مستشفى العزل الطبي برأس البر</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1.5" data-i18n="label_qty">الكمية المطلوبة (وحدة):</label>
+                            <input type="number" id="dispatchQty" value="50" min="1" max="1000" class="w-full bg-slate-950/70 border border-slate-700/80 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-cyan-500 transition-all">
+                        </div>
+
+                        <button type="submit" id="dispatchBtn" class="w-full py-3 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white font-bold text-xs shadow-lg shadow-cyan-900/30 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span data-i18n="btn_dispatch_action">إطلاق أمر التوريد الطارئ</span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800 text-[11px] text-slate-400 mt-4 flex items-center gap-2.5">
+                    <i class="fa-solid fa-shield-halved text-teal-400 text-base"></i>
+                    <span data-i18n="dispatch_note">نظام موثق بتشفير JWT والتصديق التلقائي من إدارة المستودعات.</span>
+                </div>
+            </div>
+
+            <!-- Right: Interactive Logistics Pipeline & Developer Console Log -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 md:p-6 shadow-xl backdrop-blur-sm space-y-5 lg:col-span-2 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-route text-teal-400"></i>
+                            <span data-i18n="pipeline_title">مسار تتبع شحنة الطوارئ اللوجستية (ETA Pipeline)</span>
+                        </h3>
+                        <span id="etaStatusBadge" class="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700" data-i18n="status_idle">في الانتظار...</span>
+                    </div>
+
+                    <!-- Visual Step-by-Step Pipeline Container -->
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 mb-6">
+                        <!-- Step 1 -->
+                        <div id="step-1" class="bg-slate-950/60 border border-slate-800 rounded-xl p-3.5 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-400 font-bold text-xs flex items-center justify-center step-num">1</span>
+                                <i class="fa-solid fa-file-circle-check text-slate-500 step-icon"></i>
+                            </div>
+                            <h4 class="text-xs font-bold text-slate-300" data-i18n="step1_title">تسجيل الطلب</h4>
+                            <p class="text-[10px] text-slate-500 mt-0.5" data-i18n="step1_desc">تحقق من التوقيع الرقمي للطلب</p>
+                        </div>
+                        <!-- Step 2 -->
+                        <div id="step-2" class="bg-slate-950/60 border border-slate-800 rounded-xl p-3.5 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-400 font-bold text-xs flex items-center justify-center step-num">2</span>
+                                <i class="fa-solid fa-boxes-packing text-slate-500 step-icon"></i>
+                            </div>
+                            <h4 class="text-xs font-bold text-slate-300" data-i18n="step2_title">تجهيز المستودع</h4>
+                            <p class="text-[10px] text-slate-500 mt-0.5" data-i18n="step2_desc">سحب الأصناف وفحص الصلاحية</p>
+                        </div>
+                        <!-- Step 3 -->
+                        <div id="step-3" class="bg-slate-950/60 border border-slate-800 rounded-xl p-3.5 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-400 font-bold text-xs flex items-center justify-center step-num">3</span>
+                                <i class="fa-solid fa-truck-fast text-slate-500 step-icon"></i>
+                            </div>
+                            <h4 class="text-xs font-bold text-slate-300" data-i18n="step3_title">في الطريق السريع</h4>
+                            <p class="text-[10px] text-slate-500 mt-0.5" data-i18n="step3_desc">تتبع GPS لحظي (ETA: 18m)</p>
+                        </div>
+                        <!-- Step 4 -->
+                        <div id="step-4" class="bg-slate-950/60 border border-slate-800 rounded-xl p-3.5 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-400 font-bold text-xs flex items-center justify-center step-num">4</span>
+                                <i class="fa-solid fa-circle-check text-slate-500 step-icon"></i>
+                            </div>
+                            <h4 class="text-xs font-bold text-slate-300" data-i18n="step4_title">تسليم ناجح</h4>
+                            <p class="text-[10px] text-slate-500 mt-0.5" data-i18n="step4_desc">استلام وتوثيق إلكتروني</p>
+                        </div>
+                    </div>
+
+                    <!-- Success Message Alert Box (Hidden initially) -->
+                    <div id="successAlert" class="hidden bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3.5 text-xs text-emerald-400 flex items-center gap-3">
+                        <i class="fa-solid fa-circle-check text-lg"></i>
+                        <div>
+                            <strong class="block font-bold" data-i18n="alert_success_title">تمت عملية الإرسال اللوجستي بنجاح!</strong>
+                            <span id="alertSuccessText" class="text-emerald-400/90 text-[11px]">تم تسليم الشحنة إلى الفرع المستهدف وتحديث السجلات المركزية تلقائياً.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Developer Console Log (Pro Developer Touch) -->
+                <div class="bg-slate-950 border border-slate-800/90 rounded-xl p-3.5 space-y-2">
+                    <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+                        <span class="text-[11px] font-bold text-slate-400 flex items-center gap-2 code-font">
+                            <i class="fa-solid fa-terminal text-teal-400"></i>
+                            SYSTEM_KERNEL_CONSOLE_LOG
+                        </span>
+                        <button onclick="clearConsoleLog()" class="text-[10px] text-slate-500 hover:text-slate-300 underline" data-i18n="clear_log">مسح السجل</button>
+                    </div>
+                    <div id="consoleLogBox" class="h-28 overflow-y-auto space-y-1 text-[11px] code-font text-slate-400 pr-2">
+                        <p class="text-slate-500">[00:00:01] [SYS] MediChain Core v2.4 initialized successfully.</p>
+                        <p class="text-slate-500">[00:00:01] [DB] Connected to secure inventory cluster (Damietta Central).</p>
+                        <p class="text-emerald-500/80">[00:00:02] [SEC] SSL/TLS Handshake verified. Ready for dispatch operations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900/60 border-t border-slate-800 py-4 mt-8 text-center text-xs text-slate-500">
+        <p data-i18n="footer_text">MediChain Hospital Supply Chain Management System &bull; جميع الحقوق محفوظة © 2026</p>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // --- Mock Database for Inventory ---
+        let inventoryData = [
+            { id: 1, name: "Paracetamol 500mg IV", qty: 120, safety: 250, expiry: "2027-08-15", status: "warning" },
+            { id: 2, name: "Insulin Regular 100IU", qty: 35, safety: 100, expiry: "2026-11-20", status: "critical" },
+            { id: 3, name: "Adrenaline 1mg/ml Amp", qty: 18, safety: 50, expiry: "2028-01-10", status: "critical" },
+            { id: 4, name: "Saline 0.9% 500ml Bag", qty: 850, safety: 300, expiry: "2028-05-12", status: "safe" },
+            { id: 5, name: "Amoxicillin 500mg Caps", qty: 620, safety: 200, expiry: "2027-03-30", status: "safe" },
+            { id: 6, name: "Morphine Sulfate 10mg", qty: 12, safety: 40, expiry: "2026-12-05", status: "critical" },
+            { id: 7, name: "Omeprazole 40mg Vial", qty: 310, safety: 150, expiry: "2027-09-18", status: "safe" },
+            { id: 8, name: "Heparin 5000IU/ml", qty: 85, safety: 120, expiry: "2027-02-14", status: "warning" }
+        ];
+
+        // --- Translations Dictionary (Arabic & English) ---
+        const translations = {
+            ar: {
+                sys_active: "v2.4 Production",
+                sys_subtitle: "منظومة سلاسل التوريد والخدمات اللوجستية للمستشفيات",
+                badge_secure: "منظومة آمنة لإدارة المستودعات",
+                hero_title: "إدارة المخزون الطبي واللوجستيات الطارئة",
+                hero_desc: "مراقبة فورية لمستويات الأدوية الحرجة، تنبؤ بمخزون الأمان (Safety Stock)، وإدارة الإمدادات العاجلة للفروع بأعلى كفاءة تشغيلية.",
+                btn_view_inventory: "استعراض المخزون",
+                btn_dispatch_room: "غرفة الطوارئ واللوجستيات",
+                card1_title: "إجمالي أصناف المخزون",
+                card1_sub: "+12 صنف جديد هذا الأسبوع",
+                card2_title: "تنبيهات مخزون الأمان",
+                card2_sub: "تحت الحد الأدنى الآمن",
+                card3_title: "أصناف حرجة / منتهية",
+                card3_sub: "تتطلب طلبية طوارئ عاجلة",
+                card4_title: "متوسط وقت التوريد (Lead Time)",
+                days_unit: "يوم",
+                card4_sub: "أسرع بنسبة 8% عن الشهر السابق",
+                table_main_title: "جدول المخزون الحي ومستويات الأمان",
+                table_main_desc: "البحث الفوري وتصفية الأدوية حسب حالة المخزون وتاريخ الصلاحية.",
+                filter_all: "جميع الحالات",
+                filter_safe: "آمن (Safe)",
+                filter_warning: "مخزون أمان (Low)",
+                filter_critical: "حرج / منتهي (Critical)",
+                btn_export: "تصدير",
+                th_drug: "اسم الدواء / المادة الفعالة",
+                th_qty: "الكمية الحالية",
+                th_safety: "حد الأمان (Safety Stock)",
+                th_expiry: "تاريخ الصلاحية",
+                th_status: "الحالة التشغيلية",
+                th_action: "إجراءات سريعة",
+                status_safe: "آمن",
+                status_warning: "مخزون أمان",
+                status_critical: "حرج",
+                btn_restock: "طلب توريد",
+                dispatch_title: "غرفة الطوارئ واللوجستيات",
+                dispatch_desc: "اختر الدواء والفرع المطلوب لإطلاق شحنة طوارئ فورية.",
+                label_drug: "اختر الدواء المطلوب:",
+                label_branch: "فرع المستشفى المستهدف:",
+                label_qty: "الكمية المطلوبة (وحدة):",
+                btn_dispatch_action: "إطلاق أمر التوريد الطارئ",
+                dispatch_note: "نظام موثق بتشفير JWT والتصديق التلقائي من إدارة المستودعات.",
+                pipeline_title: "مسار تتبع شحنة الطوارئ اللوجستية (ETA Pipeline)",
+                status_idle: "في الانتظار...",
+                step1_title: "تسجيل الطلب",
+                step1_desc: "تحقق من التوقيع الرقمي للطلب",
+                step2_title: "تجهيز المستودع",
+                step2_desc: "سحب الأصناف وفحص الصلاحية",
+                step3_title: "في الطريق السريع",
+                step3_desc: "تتبع GPS لحظي (ETA: 18m)",
+                step4_title: "تسليم ناجح",
+                step4_desc: "استلام وتوثيق إلكتروني",
+                alert_success_title: "تمت عملية الإرسال اللوجستي بنجاح!",
+                clear_log: "مسح السجل",
+                footer_text: "MediChain Hospital Supply Chain Management System • جميع الحقوق محفوظة © 2026"
+            },
+            en: {
+                sys_active: "v2.4 Production",
+                sys_subtitle: "Hospital Supply Chain & Logistics System",
+                badge_secure: "Secure Warehouse Management",
+                hero_title: "Medical Inventory & Emergency Logistics",
+                hero_desc: "Real-time monitoring of critical drugs, safety stock predictions, and urgent branch supply management with maximum efficiency.",
+                btn_view_inventory: "View Inventory",
+                btn_dispatch_room: "Emergency Logistics Room",
+                card1_title: "Total Inventory Items",
+                card1_sub: "+12 new items this week",
+                card2_title: "Safety Stock Alerts",
+                card2_sub: "Below safety threshold",
+                card3_title: "Critical / Expiring Items",
+                card3_sub: "Requires urgent emergency PO",
+                card4_title: "Average Lead Time",
+                days_unit: "days",
+                card4_sub: "8% faster than last month",
+                table_main_title: "Live Inventory & Safety Stock Table",
+                table_main_desc: "Instant search and filter by stock status and expiry dates.",
+                filter_all: "All Statuses",
+                filter_safe: "Safe",
+                filter_warning: "Low Stock (Safety)",
+                filter_critical: "Critical",
+                btn_export: "Export CSV",
+                th_drug: "Drug Name / Active Ingredient",
+                th_qty: "Current Qty",
+                th_safety: "Safety Threshold",
+                th_expiry: "Expiry Date",
+                th_status: "Operational Status",
+                th_action: "Quick Actions",
+                status_safe: "Safe",
+                status_warning: "Low Stock",
+                status_critical: "Critical",
+                btn_restock: "Restock",
+                dispatch_title: "Emergency Logistics Room",
+                dispatch_desc: "Select medication and destination branch to dispatch emergency stock.",
+                label_drug: "Select Medication:",
+                label_branch: "Target Hospital Branch:",
+                label_qty: "Requested Quantity (Units):",
+                btn_dispatch_action: "Dispatch Emergency Order",
+                dispatch_note: "System verified via JWT token and automated warehouse authentication.",
+                pipeline_title: "Emergency Dispatch ETA Pipeline",
+                status_idle: "Idle / Standby",
+                step1_title: "Order Registered",
+                step1_desc: "Digital signature verified",
+                step2_title: "Warehouse Processing",
+                step2_desc: "Picking items & checking expiry",
+                step3_title: "In Transit (Fast Delivery)",
+                step3_desc: "Live GPS tracking (ETA: 18m)",
+                step4_title: "Delivered Successfully",
+                step4_desc: "Received & digitally signed",
+                alert_success_title: "Emergency Dispatch Successful!",
+                clear_log: "Clear Log",
+                footer_text: "MediChain Hospital Supply Chain Management System • All Rights Reserved © 2026"
+            }
+        };
+
+        let currentLang = 'ar';
+
+        // --- Render Inventory Table ---
+        function renderTable(data) {
+            const tbody = document.getElementById('inventoryTableBody');
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-500">لا توجد نتائج مطابقة لعملية البحث</td></tr>`;
+                return;
+            }
+
+            data.forEach(item => {
+                let badgeClass = '';
+                let statusText = '';
+                if (item.status === 'safe') {
+                    badgeClass = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+                    statusText = currentLang === 'ar' ? 'آمن' : 'Safe';
+                } else if (item.status === 'warning') {
+                    badgeClass = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+                    statusText = currentLang === 'ar' ? 'مخزون أمان' : 'Low Stock';
+                } else {
+                    badgeClass = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
+                    statusText = currentLang === 'ar' ? 'حرج' : 'Critical';
+                }
+
+                const row = document.createElement('tr');
+                row.className = "hover:bg-slate-800/40 transition-colors";
+                row.innerHTML = `
+                    <td class="p-3.5 font-semibold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-capsules text-teal-400 text-xs"></i>
+                        ${item.name}
+                    </td>
+                    <td class="p-3.5 font-bold ${item.qty <= item.safety ? 'text-amber-400' : 'text-slate-200'}">${item.qty} وحدة</td>
+                    <td class="p-3.5 text-slate-400">${item.safety} وحدة</td>
+                    <td class="p-3.5 code-font text-slate-300">${item.expiry}</td>
+                    <td class="p-3.5">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold border ${badgeClass}">
+                            <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
+                            ${statusText}
+                        </span>
+                    </td>
+                    <td class="p-3.5 text-center">
+                        <button onclick="restockItem(${item.id})" class="px-2.5 py-1 rounded-lg bg-teal-500/10 hover:bg-teal-500/20 text-teal-400 border border-teal-500/20 text-[11px] font-medium transition-all">
+                            <i class="fa-solid fa-rotate-right ml-1"></i> ${currentLang === 'ar' ? 'توريد سريع' : 'Restock'}
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // --- Live Search & Filter ---
+        function filterTable() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            const filtered = inventoryData.filter(item => {
+                const matchesQuery = item.name.toLowerCase().includes(query);
+                const matchesStatus = statusFilter === 'all' || item.status === statusFilter;
+                return matchesQuery && matchesStatus;
+            });
+
+            renderTable(filtered);
+        }
+
+        // --- Quick Restock Action ---
+        function restockItem(id) {
+            const item = inventoryData.find(i => i.id === id);
+            if (item) {
+                item.qty += 100;
+                if (item.qty > item.safety) {
+                    item.status = 'safe';
+                }
+                filterTable();
+                appendConsoleLog(`[RESTOCK] Successfully ordered +100 units for item: ${item.name}`);
+            }
+        }
+
+        // --- Emergency Dispatch Simulator ---
+        function triggerDispatch(e) {
+            e.preventDefault();
+            const drug = document.getElementById('dispatchDrug').value;
+            const branch = document.getElementById('dispatchBranch').value;
+            const qty = document.getElementById('dispatchQty').value;
+            const btn = document.getElementById('dispatchBtn');
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ${currentLang === 'ar' ? 'جارٍ تنفيذ الشحنة...' : 'Dispatching...'}`;
+
+            appendConsoleLog(`[DISPATCH] Initiated order for ${qty}x ${drug} to branch: ${branch}`);
+            document.getElementById('etaStatusBadge').innerText = currentLang === 'ar' ? 'جارٍ المعالجة...' : 'Processing...';
+            document.getElementById('etaStatusBadge').className = "text-[11px] font-semibold px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30";
+
+            // Reset steps UI
+            for (let i = 1; i <= 4; i++) {
+                const step = document.getElementById(`step-${i}`);
+                step.className = "bg-slate-950/60 border border-slate-800 rounded-xl p-3.5 transition-all";
+                step.querySelector('.step-num').className = "w-6 h-6 rounded-full bg-slate-800 text-slate-400 font-bold text-xs flex items-center justify-center step-num";
+                step.querySelector('.step-icon').className = "fa-solid fa-circle text-slate-500 step-icon";
+            }
+
+            document.getElementById('successAlert').classList.add('hidden');
+
+            // Simulate Pipeline Steps
+            setTimeout(() => activateStep(1, "Order Registered via JWT Token"), 800);
+            setTimeout(() => activateStep(2, "Warehouse Picking Completed"), 2000);
+            setTimeout(() => activateStep(3, "In Transit - Live GPS Highway Route"), 3200);
+            setTimeout(() => {
+                activateStep(4, "Delivered Successfully & Signed");
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> ${currentLang === 'ar' ? 'إطلاق أمر التوريد الطارئ' : 'Dispatch Emergency Order'}`;
+                document.getElementById('etaStatusBadge').innerText = currentLang === 'ar' ? 'مكتمل بنجاح' : 'Delivered';
+                document.getElementById('etaStatusBadge').className = "text-[11px] font-semibold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30";
+                
+                const alertBox = document.getElementById('successAlert');
+                document.getElementById('alertSuccessText').innerText = currentLang === 'ar' 
+                    ? `تم توصيل شحنة (${qty} وحدة من ${drug}) إلى ${branch} بنجاح وتحديث الأرصدة.`
+                    : `Successfully delivered (${qty} units of ${drug}) to ${branch} and updated central inventory.`;
+                alertBox.classList.remove('hidden');
+                appendConsoleLog(`[SUCCESS] Logistics route completed for ${drug}.`);
+            }, 4500);
+        }
+
+        function activateStep(stepNum, logMessage) {
+            const step = document.getElementById(`step-${stepNum}`);
+            step.className = "bg-teal-500/10 border border-teal-500/40 rounded-xl p-3.5 transition-all shadow-lg shadow-teal-900/20";
+            step.querySelector('.step-num').className = "w-6 h-6 rounded-full bg-teal-500 text-slate-950 font-black text-xs flex items-center justify-center step-num";
+            step.querySelector('.step-icon').className = "fa-solid fa-circle-check text-teal-400 step-icon";
+            appendConsoleLog(`[PIPELINE] Step ${stepNum}: ${logMessage}`);
+        }
+
+        function appendConsoleLog(message) {
+            const box = document.getElementById('consoleLogBox');
+            const time = new Date().toTimeString().split(' ')[0];
+            const p = document.createElement('p');
+            p.className = message.includes('SUCCESS') ? 'text-emerald-400' : message.includes('DISPATCH') ? 'text-cyan-400' : 'text-slate-400';
+            p.innerText = `[${time}] ${message}`;
+            box.appendChild(p);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function clearConsoleLog() {
+            document.getElementById('consoleLogBox').innerHTML = `<p class="text-slate-500">[SYS] Console log cleared by user.</p>`;
+        }
+
+        // --- Export CSV ---
+        function exportCSV() {
+            let csv = 'ID,Drug Name,Current Qty,Safety Stock,Expiry Date,Status\n';
+            inventoryData.forEach(item => {
+                csv += `${item.id},"${item.name}",${item.qty},${item.safety},${item.expiry},${item.status}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', 'medichain_inventory_export.csv');
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            appendConsoleLog('[EXPORT] Inventory data exported to CSV format.');
+        }
+
+        // --- Language & Theme Toggles ---
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const html = document.documentElement;
+            html.setAttribute('lang', currentLang);
+            html.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            document.getElementById('lang-label').innerText = currentLang === 'ar' ? 'English' : 'العربية';
+
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.innerText = translations[currentLang][key];
+                }
+            });
+
+            renderTable(inventoryData);
+            appendConsoleLog(`[LANG] Interface switched to ${currentLang.toUpperCase()}`);
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = "fa-solid fa-moon text-slate-700";
+                appendConsoleLog('[UI] Switched to Light Theme');
+            } else {
+                html.classList.add('dark');
+                icon.className = "fa-solid fa-sun text-amber-400";
+                appendConsoleLog('[UI] Switched to Dark Theme');
+            }
+        }
+
+        // Initialize table on load
+        window.onload = function() {
+            renderTable(inventoryData);
+        };
+    </script>
+</body>
+</html>
